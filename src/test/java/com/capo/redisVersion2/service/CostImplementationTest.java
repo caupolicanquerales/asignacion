@@ -30,7 +30,7 @@ public class CostImplementationTest {
 	@Test
 	public void setGraphTest() throws Exception{
 		RMapReactive<String,String> map= this.client.getMap("prueba",StringCodec.INSTANCE);
-		Mono<String> edad= map.put("edad", "51");
+		Mono<String> edad= map.put("color", "negro");
 		Map<String,String> result= map.entryIterator().collectMap(Map.Entry::getKey,Map.Entry::getValue).block();
 		assert(Objects.nonNull(result));
 	}
