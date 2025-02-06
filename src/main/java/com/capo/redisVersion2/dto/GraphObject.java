@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class GraphObject {
 	
-	private Map<Integer,List<Node>> graphObject;
+	private Map<String,List<Node>> graphObject;
 
-	public Map<Integer, List<Node>> getGraphObject() {
+	public Map<String, List<Node>> getGraphObject() {
 		return graphObject;
 	}
 
-	public void setGraphObject(Map<Integer, List<Node>> graphObject) {
+	public void setGraphObject(Map<String, List<Node>> graphObject) {
 		this.graphObject = graphObject;
 	}
 }

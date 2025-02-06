@@ -7,22 +7,22 @@ import java.util.Map;
 
 public class WeightedGraphObject {
 	
-	private Map<Integer,List<Node>> adj;
+	private Map<String,List<Node>> adj;
 	
 	public WeightedGraphObject() {
-		this.adj = new HashMap<Integer, List<Node>>();
+		this.adj = new HashMap<String, List<Node>>();
 	}
 	
-	public void createVertex(Integer vertex) {
+	public void createVertex(String vertex) {
 		adj.put(vertex, new ArrayList<Node>());
 	}
 	
-	public void addEdge(Integer u, Integer v, Integer weight) {
+	public void addEdge(String u, Integer v, Integer weight) {
 		List<Node> resultU= adj.get(u);
 		resultU.add(new Node(v,weight));
 	}
 	
-	public Map<Integer,List<Node>> getGraph(){
+	public Map<String,List<Node>> getGraph(){
 		return adj;
 	}
 }

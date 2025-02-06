@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class BuildingGraphInRedisTest {
 	
 	@Autowired
-	BuildingGraphImpl buildingGraphInRedis;
+	BuildingGraphRedisImpl buildingGraphInRedis;
 	
 	@Test
 	public void buildingGraphTest() {
