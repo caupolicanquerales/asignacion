@@ -4,17 +4,16 @@ import java.util.Map;
 
 import org.redisson.api.RJsonBucketReactive;
 import org.redisson.api.RMapReactive;
-import org.redisson.api.RedissonReactiveClient;
-import org.redisson.client.codec.StringCodec;
-import org.redisson.codec.JacksonCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capo.redisVersion2.dto.GraphObject;
+import com.capo.redisVersion2.enums.RedisEnum;
+import com.capo.redisVersion2.interfaces.BasicPetitionRedis;
 import com.capo.redisVersion2.interfaces.BuildingGraphRedis;
 import com.capo.redisVersion2.interfaces.CostAndRouteRedis;
 import com.capo.redisVersion2.interfaces.DijkstraAlgorithmRedis;
-import com.capo.redisVersion2.request.RequestVertexRedis;
+import com.capo.redisVersion2.request.VertexRedisRequest;
 import com.capo.redisVersion2.response.ResponseGraphRedis;
 
 import reactor.core.publisher.Mono;
@@ -29,10 +28,7 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	private DijkstraAlgorithmRedis dijkstraAlgorithm;
 	
 	@Autowired
-	private RedissonReactiveClient client;
-	
-	private final static String MAP_COST = "costos";
-	private final static String GRAPH = "graph";
+	private BasicPetitionRedis petitionRedis;
 	
 	@Override
 	public Mono<String> buildingGraph(){
@@ -41,27 +37,26 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	@Override
-	public Mono<String> saveAndUpdateCostAndDestination(RequestVertexRedis request) {
+	public Mono<String> saveAndUpdateCostAndDestination(VertexRedisRequest request) {
 		String key= request.getStartVertex()+","+request.getEndVertex();
-		RMapReactive<String,String> map =  client.getMap(MAP_COST,StringCodec.INSTANCE);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		map.put(key, request.getCost()).then().subscribe();
 		return Mono.just("OK");
 	}
 	
 	@Override
-	public Mono<String> removeCostAndDestination(RequestVertexRedis request) {
+	public Mono<String> removeCostAndDestination(VertexRedisRequest request) {
 		String key= request.getStartVertex()+","+request.getEndVertex();
-		RMapReactive<String,String> map =  client.getMap(MAP_COST,StringCodec.INSTANCE);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		map.remove(key).then().subscribe();
 		return Mono.just("OK");
 	}
 	
 	@Override
 	public Mono<ResponseGraphRedis> estimationOfCosts(String vertex) {
-		RJsonBucketReactive<GraphObject> json =  client.getJsonBucket(GRAPH,new JacksonCodec<>(GraphObject.class));
-		Mono<GraphObject> graphObject= json.get();
-		return graphObject.map(graph->dijkstraAlgorithm.dijkstra(graph.getGraphObject(), Integer.valueOf(vertex)))
-		.map(this::getResponseGraph);
+		return this.petitionRedis.getReactiveJsonBucket(RedisEnum.GRAPH.value).get()
+			.map(graph->dijkstraAlgorithm.dijkstra(graph.getGraphObject(), Integer.valueOf(vertex)))
+			.map(this::getResponseGraph);
 	}
 	
 	private ResponseGraphRedis getResponseGraph(Map<String,Map<Integer,String>> resultDij) {
@@ -71,7 +66,7 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	private String saveGraphInRedis(GraphObject graph){
-		RJsonBucketReactive<GraphObject> json =  client.getJsonBucket(GRAPH,new JacksonCodec<>(GraphObject.class));
+		RJsonBucketReactive<GraphObject> json =  this.petitionRedis.getReactiveJsonBucket(RedisEnum.GRAPH.value);
 		json.set(graph).then().subscribe();
 		return "OK";
 	}

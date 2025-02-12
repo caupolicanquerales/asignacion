@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.capo.redisVersion2.dto.PointsOfSale;
 import com.capo.redisVersion2.interfaces.PointsOfSaleRedis;
-import com.capo.redisVersion2.request.RequestPointsRedis;
+import com.capo.redisVersion2.request.PointsRedisRequest;
 import com.capo.redisVersion2.response.ResponsePointsRedis;
 
 import reactor.core.publisher.Mono;
@@ -26,14 +26,14 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 	private final static String MAP_POINT = "puntos";
 	
 	@Override
-	public Mono<String> saveAndUpdateCostPointsOfSale(RequestPointsRedis request) {
+	public Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request) {
 		RMapReactive<String,String> map =  client.getMap(MAP_POINT, StringCodec.INSTANCE);
 		map.put(request.getLocation(),request.getId()).then().subscribe();
 		return Mono.just("OK");
 	}
 	
 	@Override
-	public Mono<String> removePointsOfSale(RequestPointsRedis request) {
+	public Mono<String> removePointsOfSale(PointsRedisRequest request) {
 		RMapReactive<String,String> map =  client.getMap(MAP_POINT, StringCodec.INSTANCE);
 		map.remove(request.getLocation()).then().subscribe();
 		return Mono.just("OK");
