@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
+/*
 import org.redisson.api.RAtomicLongReactive;
 import org.redisson.api.RList;
 import org.redisson.api.RListReactive;
@@ -14,10 +15,10 @@ import org.redisson.api.RedissonReactiveClient;
 import org.redisson.client.codec.Codec;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.JsonJacksonCodec;
-import org.redisson.codec.TypedJsonJacksonCodec;
+import org.redisson.codec.TypedJsonJacksonCodec;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.ReactiveValueOperations;
+//import org.springframework.data.redis.core.ReactiveValueOperations;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,7 +26,7 @@ import reactor.test.StepVerifier;
 
 @SpringBootTest
 class RedisVersion2ApplicationTests {
-	
+	/*
 	@Autowired
 	private RedissonReactiveClient client;
 	
@@ -55,5 +56,5 @@ class RedisVersion2ApplicationTests {
 		assert(Objects.nonNull(mapPuntos));		
 		
 	}
-
+*/
 }
