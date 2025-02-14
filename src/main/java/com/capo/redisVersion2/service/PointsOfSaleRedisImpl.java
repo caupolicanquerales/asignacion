@@ -25,7 +25,7 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 	
 	@Override
 	public Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request) {
-		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
 		map.put(request.getLocation(),request.getId()).then().subscribe();
 		return Mono.just("OK");
 	}
@@ -34,14 +34,14 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 	
 	@Override
 	public Mono<String> removePointsOfSale(PointsRedisRequest request) {
-		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
 		map.remove(request.getLocation()).then().subscribe();
 		return Mono.just("OK");
 	}
 	
 	@Override
 	public Mono<ResponsePointsRedis> getPointsOfSale() {
-		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
 		return map.entryIterator().map(this::getPointsOfSale)
 			.collect(Collectors.toList())
 			.map(this::getResponsePointsRedis);
