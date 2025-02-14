@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.redisson.api.RMapReactive;
-import org.redisson.api.RedissonReactiveClient;
-import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capo.redisVersion2.dto.PointsOfSale;
+import com.capo.redisVersion2.enums.RedisEnum;
+import com.capo.redisVersion2.interfaces.BasicPetitionRedis;
 import com.capo.redisVersion2.interfaces.PointsOfSaleRedis;
 import com.capo.redisVersion2.request.PointsRedisRequest;
 import com.capo.redisVersion2.response.ResponsePointsRedis;
@@ -21,27 +21,27 @@ import reactor.core.publisher.Mono;
 public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 	
 	@Autowired
-	private RedissonReactiveClient client;
-	
-	private final static String MAP_POINT = "puntos";
+	private BasicPetitionRedis petitionRedis;
 	
 	@Override
 	public Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request) {
-		RMapReactive<String,String> map =  client.getMap(MAP_POINT, StringCodec.INSTANCE);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		map.put(request.getLocation(),request.getId()).then().subscribe();
 		return Mono.just("OK");
 	}
 	
+	
+	
 	@Override
 	public Mono<String> removePointsOfSale(PointsRedisRequest request) {
-		RMapReactive<String,String> map =  client.getMap(MAP_POINT, StringCodec.INSTANCE);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		map.remove(request.getLocation()).then().subscribe();
 		return Mono.just("OK");
 	}
 	
 	@Override
 	public Mono<ResponsePointsRedis> getPointsOfSale() {
-		RMapReactive<String,String> map =  client.getMap(MAP_POINT, StringCodec.INSTANCE);
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		return map.entryIterator().map(this::getPointsOfSale)
 			.collect(Collectors.toList())
 			.map(this::getResponsePointsRedis);

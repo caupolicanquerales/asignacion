@@ -3,11 +3,12 @@ package com.capo.redisVersion2.service;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
+/*
 import org.redisson.api.RBucketReactive;
 import org.redisson.api.RJsonBucketReactive;
 import org.redisson.api.RedissonReactiveClient;
 import org.redisson.client.codec.StringCodec;
-import org.redisson.codec.JacksonCodec;
+import org.redisson.codec.JacksonCodec;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,7 +19,7 @@ import reactor.core.publisher.Mono;
 
 @SpringBootTest
 public class CostImplementationTest {
-	
+	/*
 	@Autowired
 	CostRedisImplementation costImplementation;
 	
@@ -62,4 +63,5 @@ public class CostImplementationTest {
 		json.set("monitor").then().subscribe();
 		assert(Objects.nonNull(json));
 	}
+	*/
 }

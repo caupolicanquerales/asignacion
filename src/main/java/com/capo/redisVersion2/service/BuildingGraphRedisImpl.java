@@ -15,7 +15,6 @@ import com.capo.redisVersion2.interfaces.BuildingGraphRedis;
 
 import reactor.core.publisher.Mono;
 
-
 @Service
 public class BuildingGraphRedisImpl implements BuildingGraphRedis {
 	
