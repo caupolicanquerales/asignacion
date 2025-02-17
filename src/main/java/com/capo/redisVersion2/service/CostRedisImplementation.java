@@ -54,7 +54,7 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	
 	@Override
 	public Mono<ResponseGraphRedis> estimationOfCosts(String vertex) {
-		return this.petitionRedis.getReactiveJsonBucket(RedisEnum.GRAPH.value).get()
+		return this.petitionRedis.getReactiveJsonBucket(RedisEnum.GRAPH.value)
 			.map(graph->dijkstraAlgorithm.dijkstra(graph.getGraphObject(), Integer.valueOf(vertex)))
 			.map(this::getResponseGraph);
 	}
@@ -66,7 +66,7 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	private String saveGraphInRedis(GraphObject graph){
-		RJsonBucketReactive<GraphObject> json =  this.petitionRedis.getReactiveJsonBucket(RedisEnum.GRAPH.value);
+		RJsonBucketReactive<GraphObject> json =  this.petitionRedis.saveReactiveJsonBucket(RedisEnum.GRAPH.value);
 		json.set(graph).then().subscribe();
 		return "OK";
 	}
