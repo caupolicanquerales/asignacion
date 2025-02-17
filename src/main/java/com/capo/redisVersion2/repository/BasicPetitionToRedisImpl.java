@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.capo.redisVersion2.dto.GraphObject;
 import com.capo.redisVersion2.interfaces.BasicPetitionRedis;
 
+import reactor.core.publisher.Mono;
+
 @Repository
 public class BasicPetitionToRedisImpl implements BasicPetitionRedis{
 	
@@ -22,7 +24,13 @@ public class BasicPetitionToRedisImpl implements BasicPetitionRedis{
 	}
 	
 	@Override
-	public RJsonBucketReactive<GraphObject> getReactiveJsonBucket(String jsonName){
+	public Mono<GraphObject> getReactiveJsonBucket(String jsonName){
+		RJsonBucketReactive<GraphObject> json= client.getJsonBucket(jsonName,new JacksonCodec<>(GraphObject.class));
+		return json.get();
+	}
+	
+	@Override
+	public RJsonBucketReactive<GraphObject> saveReactiveJsonBucket(String jsonName){
 		return client.getJsonBucket(jsonName,new JacksonCodec<>(GraphObject.class));
 	}
 }
