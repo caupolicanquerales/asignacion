@@ -30,7 +30,9 @@ public class BasicPetitionToRedisImpl implements BasicPetitionRedis{
 	}
 	
 	@Override
-	public RJsonBucketReactive<GraphObject> saveReactiveJsonBucket(String jsonName){
-		return client.getJsonBucket(jsonName,new JacksonCodec<>(GraphObject.class));
+	public String saveReactiveJsonBucket(String jsonName, GraphObject graph){
+		RJsonBucketReactive<GraphObject> json= client.getJsonBucket(jsonName,new JacksonCodec<>(GraphObject.class));
+		json.set(graph).then().subscribe();
+		return "OK";
 	}
 }

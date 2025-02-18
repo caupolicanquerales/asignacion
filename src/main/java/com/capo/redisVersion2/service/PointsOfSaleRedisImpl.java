@@ -30,8 +30,6 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 		return Mono.just("OK");
 	}
 	
-	
-	
 	@Override
 	public Mono<String> removePointsOfSale(PointsRedisRequest request) {
 		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
