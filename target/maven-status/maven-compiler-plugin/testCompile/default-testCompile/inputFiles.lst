@@ -1,4 +1,6 @@
 /home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/RedisVersion2ApplicationTests.java
+/home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/controller/CostPointsOfSaleRedisControllerTest.java
+/home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/controller/PointsOfSaleRedisControllerTest.java
 /home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/service/BuildingGraphInRedisTest.java
 /home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/service/CostRedisImplementationTest.java
 /home/caupolican/Desktop/programas/java/asignacion/src/test/java/com/capo/redisVersion2/service/DijkstraAlgorithmRedisImplTest.java
