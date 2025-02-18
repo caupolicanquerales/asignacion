@@ -446,7 +446,7 @@ public class MapReactiveMock implements RMapReactive<String,String>{
 
 	@Override
 	public Flux<Entry<String, String>> entryIterator() {
-		Map.Entry<String, String> entry = Map.entry("key", "value");
+		Map.Entry<String, String> entry = Map.entry("1,2", "2");
 		return Flux.just(entry);
 	}
 
