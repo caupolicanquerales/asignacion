@@ -2,7 +2,6 @@ package com.capo.redisVersion2.service;
 
 import java.util.Map;
 
-import org.redisson.api.RJsonBucketReactive;
 import org.redisson.api.RMapReactive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,8 +65,6 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	private String saveGraphInRedis(GraphObject graph){
-		RJsonBucketReactive<GraphObject> json =  this.petitionRedis.saveReactiveJsonBucket(RedisEnum.GRAPH.value);
-		json.set(graph).then().subscribe();
-		return "OK";
+		return  this.petitionRedis.saveReactiveJsonBucket(RedisEnum.GRAPH.value, graph);
 	}
 }
