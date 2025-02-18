@@ -3,7 +3,7 @@
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/config/ConfigurationRedisson.java
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/config/JwtAuthenticationFilter.java
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/config/SpringSecurityConfig.java
-/home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/controller/CostosEntrePuntosRedisController.java
+/home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/controller/CostPointsOfSaleRedisController.java
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/controller/PointsOfSaleRedisController.java
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/dto/GraphObject.java
 /home/caupolican/Desktop/programas/java/asignacion/src/main/java/com/capo/redisVersion2/dto/Node.java
