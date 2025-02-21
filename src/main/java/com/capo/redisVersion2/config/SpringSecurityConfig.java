@@ -28,6 +28,8 @@ public class SpringSecurityConfig {
 		
 		return http.authorizeExchange(exchange-> exchange
 				.pathMatchers(HttpMethod.GET,"/puntos/points").permitAll()
+				.pathMatchers(HttpMethod.GET,"/costos/build").permitAll()
+				.pathMatchers(HttpMethod.GET,"/costos/prices").permitAll()
 				.anyExchange().authenticated())
 				.csrf(ServerHttpSecurity.CsrfSpec::disable)
 				.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

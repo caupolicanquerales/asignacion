@@ -1,6 +1,6 @@
 package com.capo.redisVersion2.dto;
 
-public class PointsOfSale {
+public class Point {
 	private String id;
 	private String location;
 	

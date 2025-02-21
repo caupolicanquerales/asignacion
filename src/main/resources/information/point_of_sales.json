@@ -1,0 +1,44 @@
+{
+	"pointOfSales":[
+		{
+			"id":"1",
+			"location":"CABA"
+		},
+		{
+			"id":"2",
+			"location":"GBA_1"
+		},
+		{
+			"id":"3",
+			"location":"GBA_2"
+		},
+		{
+			"id":"4",
+			"location":"Santa Fe"
+		},
+		{
+			"id":"5",
+			"location":"Cordoba"
+		},
+		{
+			"id":"6",
+			"location":"Misiones"
+		},
+		{
+			"id":"7",
+			"location":"Salta"
+		},
+		{
+			"id":"8",
+			"location":"Chubut"
+		},
+		{
+			"id":"9",
+			"location":"Santa Cruz"
+		},
+		{
+			"id":"10",
+			"location":"Catamarca"
+		}
+	]
+}

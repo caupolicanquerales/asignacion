@@ -8,7 +8,7 @@ import org.redisson.api.RMapReactive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capo.redisVersion2.dto.PointsOfSale;
+import com.capo.redisVersion2.dto.Point;
 import com.capo.redisVersion2.enums.RedisEnum;
 import com.capo.redisVersion2.interfaces.BasicPetitionRedis;
 import com.capo.redisVersion2.interfaces.PointsOfSaleRedis;
@@ -45,14 +45,21 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 			.map(this::getResponsePointsRedis);
 	}
 	
-	private PointsOfSale getPointsOfSale(Map.Entry<String, String> entry) {
-		PointsOfSale point = new PointsOfSale();
+	@Override
+	public String savePointsOfSaleStartingApp(PointsRedisRequest request) {
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
+		map.put(request.getLocation(),request.getId()).then().subscribe();
+		return "OK";
+	}
+	
+	private Point getPointsOfSale(Map.Entry<String, String> entry) {
+		Point point = new Point();
 		point.setId(entry.getKey());
 		point.setLocation(entry.getValue());
 		return point;
 	}
 	
-	private ResponsePointsRedis getResponsePointsRedis(List<PointsOfSale> list) {
+	private ResponsePointsRedis getResponsePointsRedis(List<Point> list) {
 		ResponsePointsRedis points = new ResponsePointsRedis();
 		points.setPoints(list);
 		return points;

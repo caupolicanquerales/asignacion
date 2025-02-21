@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RedisVersion2Application {
-
 	public static void main(String[] args) {
-		SpringApplication.run(RedisVersion2Application.class, args);
+		String[] customArgs = new String[] {"points","destinations"};
+		SpringApplication.run(RedisVersion2Application.class, customArgs);
 	}
 
 }
