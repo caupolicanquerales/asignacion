@@ -10,4 +10,5 @@ public interface CostAndRouteRedis {
 	Mono<ResponseGraphRedis> estimationOfCosts(String vertex);
 	Mono<String> saveAndUpdateCostAndDestination(VertexRedisRequest request);
 	Mono<String> removeCostAndDestination(VertexRedisRequest request);
+	String saveAndUpdateCostAndDestinationStartingApp(VertexRedisRequest request);
 }

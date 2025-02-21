@@ -18,6 +18,7 @@ public class BasicPetitionToRedisImpl implements BasicPetitionRedis{
 	@Autowired
 	private RedissonReactiveClient client;
 	
+	
 	@Override
 	public RMapReactive<String,String> getReactiveMap(String mapName){
 		return client.getMap(mapName,StringCodec.INSTANCE);

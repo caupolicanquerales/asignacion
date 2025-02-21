@@ -58,6 +58,14 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 			.map(this::getResponseGraph);
 	}
 	
+	@Override
+	public String saveAndUpdateCostAndDestinationStartingApp(VertexRedisRequest request) {
+		String key= request.getStartVertex()+","+request.getEndVertex();
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
+		map.put(key, request.getCost()).then().subscribe();
+		return "OK";
+	}
+	
 	private ResponseGraphRedis getResponseGraph(Map<String,Map<Integer,String>> resultDij) {
 		ResponseGraphRedis result = new ResponseGraphRedis();
 		result.setResult(resultDij);

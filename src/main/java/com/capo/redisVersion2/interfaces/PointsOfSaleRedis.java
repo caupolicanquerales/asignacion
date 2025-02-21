@@ -9,4 +9,5 @@ public interface PointsOfSaleRedis {
 	Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request);
 	Mono<String> removePointsOfSale(PointsRedisRequest request);
 	Mono<ResponsePointsRedis> getPointsOfSale();
+	String savePointsOfSaleStartingApp(PointsRedisRequest request);
 }
