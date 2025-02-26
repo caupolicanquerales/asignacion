@@ -43,7 +43,7 @@ public class CostRedisImplementationTest {
 	
 	
 	private VertexRedisRequest request;
-	private RMapReactive<String,String> map;
+	private RMapReactive<String,String> map =new MapReactiveMock();
 	
 	@BeforeEach
 	public void setup() {
@@ -51,7 +51,6 @@ public class CostRedisImplementationTest {
 		request.setCost("2");
 		request.setStartVertex("1");
 		request.setEndVertex("2");
-		map= new MapReactiveMock();
 	} 
 	
 	@Test

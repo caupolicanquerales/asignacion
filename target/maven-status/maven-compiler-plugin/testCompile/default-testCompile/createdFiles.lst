@@ -1,6 +1,6 @@
 com/capo/redisVersion2/service/PointsOfSaleRedisImplTest.class
-com/capo/redisVersion2/controller/CostPointsOfSaleRedisControllerTest.class
 com/capo/redisVersion2/controller/PointsOfSaleRedisControllerTest.class
+com/capo/redisVersion2/controller/CostPointsOfSaleRedisControllerTest.class
 com/capo/redisVersion2/service/BuildingGraphInRedisTest.class
 com/capo/redisVersion2/service/DijkstraAlgorithmRedisImplTest.class
 com/capo/redisVersion2/service/CostRedisImplementationTest.class

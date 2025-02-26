@@ -1,6 +1,8 @@
 package com.capo.redisVersion2.service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.redisson.api.RMapReactive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.capo.redisVersion2.interfaces.BuildingGraphRedis;
 import com.capo.redisVersion2.interfaces.CostAndRouteRedis;
 import com.capo.redisVersion2.interfaces.DijkstraAlgorithmRedis;
 import com.capo.redisVersion2.request.VertexRedisRequest;
+import com.capo.redisVersion2.response.ResponseCostDestinations;
 import com.capo.redisVersion2.response.ResponseGraphRedis;
 
 import reactor.core.publisher.Mono;
@@ -64,6 +67,30 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
 		map.put(key, request.getCost()).then().subscribe();
 		return "OK";
+	}
+	
+	@Override
+	public Mono<ResponseCostDestinations> getAllCostsAndDestinations() {
+		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
+		return map.entryIterator().map(this::getCostAndDestination)
+			.collect(Collectors.toList())
+			.map(this::getResponseCostDestinations);
+	}
+	
+	
+	private VertexRedisRequest getCostAndDestination(Map.Entry<String, String> entry) {
+		VertexRedisRequest destination = new VertexRedisRequest();
+		String[] vertex= entry.getKey().split(","); 
+		destination.setCost(entry.getValue());
+		destination.setStartVertex(vertex[0]);
+		destination.setEndVertex(vertex[1]);
+		return destination;
+	}
+	
+	private ResponseCostDestinations getResponseCostDestinations(List<VertexRedisRequest> list) {
+		ResponseCostDestinations points = new ResponseCostDestinations();
+		points.setCostAndDestination(list);
+		return points;
 	}
 	
 	private ResponseGraphRedis getResponseGraph(Map<String,Map<Integer,String>> resultDij) {

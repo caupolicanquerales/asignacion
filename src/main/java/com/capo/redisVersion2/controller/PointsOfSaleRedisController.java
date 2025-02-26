@@ -41,4 +41,11 @@ public class PointsOfSaleRedisController {
 				.map(ResponseEntity.ok()::body)
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}
+	
+	@PostMapping("/save-point")
+	public Mono<ResponseEntity<String>> savePointsOfsale(@RequestBody PointsRedisRequest request){
+		return pointsOfSale.savePointsOfSale(request)
+				.map(ResponseEntity.ok()::body)
+				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+	}
 }

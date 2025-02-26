@@ -1,7 +1,12 @@
 package com.capo.redisVersion2.repository;
+import java.util.Collection;
+import java.util.Map;
+
 import org.redisson.api.RJsonBucketReactive;
+import org.redisson.api.RMapCacheReactive;
 import org.redisson.api.RMapReactive;
 import org.redisson.api.RedissonReactiveClient;
+import org.redisson.api.map.MapWriter;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.JacksonCodec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +41,10 @@ public class BasicPetitionToRedisImpl implements BasicPetitionRedis{
 		json.set(graph).then().subscribe();
 		return "OK";
 	}
+	
+	@Override
+	public RMapCacheReactive <String,String> getRMapCahe(String mapName){
+		return client.getMapCache(mapName);
+	}
+
 }

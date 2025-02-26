@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.capo.redisVersion2.interfaces.CostAndRouteRedis;
 import com.capo.redisVersion2.request.VertexRedisRequest;
+import com.capo.redisVersion2.response.ResponseCostDestinations;
 import com.capo.redisVersion2.response.ResponseGraphRedis;
 
 import reactor.core.publisher.Mono;
@@ -46,6 +47,13 @@ public class CostPointsOfSaleRedisController {
 	@GetMapping("/build")
 	public Mono<ResponseEntity<String>> buildingGraph(@RequestBody VertexRedisRequest request){
 		return costAndRoute.buildingGraph()
+				.map(ResponseEntity.ok()::body)
+				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+	}
+	
+	@GetMapping("/destinations")
+	public Mono<ResponseEntity<ResponseCostDestinations>> getAllCostsAndDestinations(@RequestBody VertexRedisRequest request){
+		return costAndRoute.getAllCostsAndDestinations()
 				.map(ResponseEntity.ok()::body)
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}

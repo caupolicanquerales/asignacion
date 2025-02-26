@@ -28,8 +28,12 @@ public class SpringSecurityConfig {
 		
 		return http.authorizeExchange(exchange-> exchange
 				.pathMatchers(HttpMethod.GET,"/puntos/points").permitAll()
+				.pathMatchers(HttpMethod.POST,"/puntos/save").permitAll()
+				.pathMatchers(HttpMethod.POST,"/puntos/save-point").permitAll()
 				.pathMatchers(HttpMethod.GET,"/costos/build").permitAll()
 				.pathMatchers(HttpMethod.GET,"/costos/prices").permitAll()
+				.pathMatchers(HttpMethod.GET,"/costos/destinations").permitAll()
+				.pathMatchers(HttpMethod.POST,"/costos/save").permitAll()
 				.anyExchange().authenticated())
 				.csrf(ServerHttpSecurity.CsrfSpec::disable)
 				.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

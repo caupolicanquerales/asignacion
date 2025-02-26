@@ -18,6 +18,7 @@ com/capo/redisVersion2/component/PreloadPointsOfSale.class
 com/capo/redisVersion2/config/AuthenticationManagerConfig.class
 com/capo/redisVersion2/config/JwtAuthenticationFilter.class
 com/capo/redisVersion2/service/UserServiceImpl.class
+com/capo/redisVersion2/response/ResponseCostDestinations.class
 com/capo/redisVersion2/response/ResponseGraphRedis.class
 com/capo/redisVersion2/service/DijkstraAlgorithmRedisImpl.class
 com/capo/redisVersion2/interfaces/DijkstraAlgorithmRedis.class
@@ -39,5 +40,5 @@ com/capo/redisVersion2/config/SpringSecurityConfig.class
 com/capo/redisVersion2/controller/CostPointsOfSaleRedisController.class
 com/capo/redisVersion2/repository/PointOfSaleMongoRepository.class
 com/capo/redisVersion2/interfaces/UserService.class
-com/capo/redisVersion2/dto/CostAndDestination.class
 com/capo/redisVersion2/interfaces/CostAndRouteRedis.class
+com/capo/redisVersion2/dto/CostAndDestination.class
