@@ -34,6 +34,7 @@ public class SpringSecurityConfig {
 				.pathMatchers(HttpMethod.GET,"/costos/prices").permitAll()
 				.pathMatchers(HttpMethod.GET,"/costos/destinations").permitAll()
 				.pathMatchers(HttpMethod.POST,"/costos/save").permitAll()
+				.pathMatchers(HttpMethod.POST,"/costos/save-destination").permitAll()
 				.anyExchange().authenticated())
 				.csrf(ServerHttpSecurity.CsrfSpec::disable)
 				.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

@@ -36,9 +36,9 @@ class CostPointsOfSaleRedisControllerTest {
 	}
 
 	@Test
-	void saveCostAndDestination_test() {
+	void updateCostAndDestination_test() {
 		when(costAndRoute.saveAndUpdateCostAndDestination(Mockito.any())).thenReturn(Mono.just("OK"));
-		Mono<ResponseEntity<String>> response=costPointsOfSale.saveCostAndDestination(request);
+		Mono<ResponseEntity<String>> response=costPointsOfSale.updateCostAndDestination(request);
 		ResponseEntity<String> result= response.block();
 		assert(result.getBody().equals("OK"));
 	}

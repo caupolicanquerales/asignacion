@@ -24,7 +24,7 @@ public class CostPointsOfSaleRedisController {
 	CostAndRouteRedis costAndRoute;
 	
 	@PostMapping("/save")
-	public Mono<ResponseEntity<String>> saveCostAndDestination(@RequestBody VertexRedisRequest request){
+	public Mono<ResponseEntity<String>> updateCostAndDestination(@RequestBody VertexRedisRequest request){
 		return costAndRoute.saveAndUpdateCostAndDestination(request)
 				.map(ResponseEntity.ok()::body)
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
@@ -54,6 +54,13 @@ public class CostPointsOfSaleRedisController {
 	@GetMapping("/destinations")
 	public Mono<ResponseEntity<ResponseCostDestinations>> getAllCostsAndDestinations(@RequestBody VertexRedisRequest request){
 		return costAndRoute.getAllCostsAndDestinations()
+				.map(ResponseEntity.ok()::body)
+				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+	}
+	
+	@PostMapping("/save-destination")
+	public Mono<ResponseEntity<String>> saveCostAndDestination(@RequestBody VertexRedisRequest request){
+		return costAndRoute.saveCostAndDestination(request)
 				.map(ResponseEntity.ok()::body)
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}

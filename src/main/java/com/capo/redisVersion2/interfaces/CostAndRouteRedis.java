@@ -13,4 +13,5 @@ public interface CostAndRouteRedis {
 	Mono<String> removeCostAndDestination(VertexRedisRequest request);
 	String saveAndUpdateCostAndDestinationStartingApp(VertexRedisRequest request);
 	Mono<ResponseCostDestinations> getAllCostsAndDestinations();
+	Mono<String> saveCostAndDestination(VertexRedisRequest request);
 }

@@ -64,13 +64,13 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 			.hasElement().map(element->{
 				if(!element) {
 					map.put(request.getLocation(),request.getId()).then().subscribe();
-					return savePointInRedis(request);
+					return savePointInMongo(request);
 				}
 				return Mono.just("ERROR");
 			}).flatMap(result->result);
 	}
 	
-	private Mono<String> savePointInRedis(PointsRedisRequest request) {
+	private Mono<String> savePointInMongo(PointsRedisRequest request) {
 		PointOfSalesInMongo pointOfSales =getPointOfSalesInMongo(request);
 		return pointOfSaleMongo.save(pointOfSales).map(result->{
 			return "OK";
