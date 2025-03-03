@@ -6,7 +6,7 @@ import com.capo.redisVersion2.response.ResponsePointsRedis;
 import reactor.core.publisher.Mono;
 
 public interface PointsOfSaleRedis {
-	Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request);
+	Mono<String> updateCostPointsOfSale(PointsRedisRequest request);
 	Mono<String> removePointsOfSale(PointsRedisRequest request);
 	Mono<ResponsePointsRedis> getPointsOfSale();
 	String savePointsOfSaleStartingApp(PointsRedisRequest request);

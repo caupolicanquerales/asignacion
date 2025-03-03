@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono;
 public interface CostAndRouteRedis {
 	Mono<String> buildingGraph();
 	Mono<ResponseGraphRedis> estimationOfCosts(String vertex);
-	Mono<String> saveAndUpdateCostAndDestination(VertexRedisRequest request);
-	Mono<String> removeCostAndDestination(VertexRedisRequest request);
+	Mono<String> updateCost(VertexRedisRequest request);
+	Mono<String> deleteCostAndDestination(VertexRedisRequest request);
 	String saveAndUpdateCostAndDestinationStartingApp(VertexRedisRequest request);
 	Mono<ResponseCostDestinations> getAllCostsAndDestinations();
 	Mono<String> saveCostAndDestination(VertexRedisRequest request);

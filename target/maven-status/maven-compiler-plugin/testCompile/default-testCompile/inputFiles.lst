@@ -1,4 +1,6 @@
 /home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/RedisVersion2ApplicationTests.java
+/home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/component/PreloadDestinationAndCostTest.java
+/home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/component/PreloadPointsOfSaleTest.java
 /home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/controller/CostPointsOfSaleRedisControllerTest.java
 /home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/controller/PointsOfSaleRedisControllerTest.java
 /home/usuario/Escritorio/programas/asignacion/src/test/java/com/capo/redisVersion2/service/BuildingGraphInRedisTest.java

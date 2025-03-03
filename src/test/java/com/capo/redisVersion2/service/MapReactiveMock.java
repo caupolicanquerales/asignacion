@@ -382,8 +382,10 @@ public class MapReactiveMock implements RMapReactive<String,String>{
 
 	@Override
 	public Mono<String> get(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(key.equals("NO,NO")) {
+			return Mono.empty();
+		}
+		return Mono.just("value");
 	}
 
 	@Override

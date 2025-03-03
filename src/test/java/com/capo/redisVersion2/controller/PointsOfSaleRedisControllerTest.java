@@ -1,6 +1,5 @@
 package com.capo.redisVersion2.controller;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.Objects;
@@ -38,7 +37,7 @@ class PointsOfSaleRedisControllerTest {
 
 	@Test
 	void saveAndUpdatePointsOfsale_test() {
-		when(pointsOfSale.saveAndUpdateCostPointsOfSale(Mockito.any())).thenReturn(Mono.just("OK"));
+		when(pointsOfSale.updateCostPointsOfSale(Mockito.any())).thenReturn(Mono.just("OK"));
 		ResponseEntity<String> response=pointsOfSaleController.saveAndUpdatePointsOfsale(request).block();
 		assert(response.getBody().equals("OK"));
 	}

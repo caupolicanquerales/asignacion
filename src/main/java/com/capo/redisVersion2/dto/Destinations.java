@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Destinations {
 	
-	private List<CostAndDestination> costAndDestination;
+	private List<Destination> costAndDestination;
 
-	public List<CostAndDestination> getCostAndDestination() {
+	public List<Destination> getCostAndDestination() {
 		return costAndDestination;
 	}
 
-	public void setCostAndDestination(List<CostAndDestination> costAndDestination) {
+	public void setCostAndDestination(List<Destination> costAndDestination) {
 		this.costAndDestination = costAndDestination;
 	}
 }

@@ -8,7 +8,7 @@ import org.redisson.api.RMapReactive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capo.redisVersion2.dto.CostAndDestination;
+import com.capo.redisVersion2.dto.Destination;
 import com.capo.redisVersion2.dto.GraphObject;
 import com.capo.redisVersion2.entity.DestinationPointOfSalesMongo;
 import com.capo.redisVersion2.enums.RedisEnum;
@@ -36,7 +36,7 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	private BasicPetitionRedis petitionRedis;
 	
 	@Autowired
-	DestinationPointOfSalesMongoRepository destinationPointOfSales;
+	private DestinationPointOfSalesMongoRepository destinationPointOfSales;
 	
 	@Override
 	public Mono<String> buildingGraph(){
@@ -45,19 +45,35 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	@Override
-	public Mono<String> saveAndUpdateCostAndDestination(VertexRedisRequest request) {
+	public Mono<String> updateCost(VertexRedisRequest request) {
 		String key= request.getStartVertex()+","+request.getEndVertex();
 		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
-		map.put(key, request.getCost()).then().subscribe();
-		return Mono.just("OK");
+		return Mono.just(map.get(key)).flatMap(item->item)
+				.hasElement().map(element->{
+					if(element) {
+						Mono<String> cost= map.get(key);
+						return updateCostInMongo(request,cost).map(resut->{
+							map.put(key, request.getCost()).then().subscribe();
+							return "OK";
+						});
+					}
+					return Mono.just("ERROR");
+				}).flatMap(result->result);
 	}
 	
 	@Override
-	public Mono<String> removeCostAndDestination(VertexRedisRequest request) {
+	public Mono<String> deleteCostAndDestination(VertexRedisRequest request) {
 		String key= request.getStartVertex()+","+request.getEndVertex();
 		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_COST.value);
-		map.remove(key).then().subscribe();
-		return Mono.just("OK");
+		return Mono.just(map.get(key)).flatMap(item->item)
+		.hasElement().map(element->{
+			if(element) {
+				map.remove(key).then().subscribe();
+				Destination destination= getCostAndDestination(request);
+				return deleteCostAndDestinationInMongo(destination);
+			}
+			return Mono.just("ERROR");
+		}).flatMap(result->result);
 	}
 	
 	@Override
@@ -99,22 +115,67 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	}
 	
 	private Mono<String> saveCostAndDestinationInMongo(VertexRedisRequest request) {
-		CostAndDestination costAndDestination = getCostAndDestination(request);
+		Destination costAndDestination = getCostAndDestination(request);
 		DestinationPointOfSalesMongo destination =getDestinationPointOfSalesMongo(costAndDestination);
 		return destinationPointOfSales.save(destination).map(result->{
 			return "OK";
 		});
 	}
 	
-	private DestinationPointOfSalesMongo getDestinationPointOfSalesMongo(CostAndDestination destination) {
+	private Mono<String> updateCostInMongo(VertexRedisRequest request,Mono<String> cost) {
+		return cost.map(this::setCostInDestination)
+				.map(destination->setDestinationForUpdate(destination,request))
+				.map(destinationPointOfSales::findByDestination)
+				.map(result->setCostInDestinationPointOfSalesMongo(result,request))
+				.flatMap(this::updateCostInColectionMongo);
+	}
+	
+	private Mono<String> deleteCostAndDestinationInMongo(Destination destination) {
+		return destinationPointOfSales.findByDestination(destination)
+				.map(collec->{
+					return destinationPointOfSales.deleteById(collec.getId());
+				})
+				.map(result->{
+					return "OK";
+				});
+	}
+	
+	
+	private DestinationPointOfSalesMongo getDestinationPointOfSalesMongo(Destination destination) {
 		DestinationPointOfSalesMongo destinationMongo = new DestinationPointOfSalesMongo();
-		destinationMongo.setCostAndDestination(destination);
+		destinationMongo.setDestination(destination);
 		return destinationMongo;
 	}
 	
-	private CostAndDestination getCostAndDestination(VertexRedisRequest request) {
-		CostAndDestination costAndDestination = new CostAndDestination();
+	private Destination getCostAndDestination(VertexRedisRequest request) {
+		Destination costAndDestination = new Destination();
 		costAndDestination.setCost(request.getCost());
+		costAndDestination.setStartVertex(request.getStartVertex());
+		costAndDestination.setEndVertex(request.getEndVertex());
+		return costAndDestination;
+	}
+	
+	private Destination setCostInDestination(String cost) {
+		Destination costAndDestination = new Destination();
+		costAndDestination.setCost(cost);
+		return costAndDestination;
+	}
+	
+	private Mono<DestinationPointOfSalesMongo> setCostInDestinationPointOfSalesMongo(Mono<DestinationPointOfSalesMongo> destinationMongo,VertexRedisRequest request) {
+		return destinationMongo.map(destination->{
+			destination.getDestination().setCost(request.getCost());
+			return destination;
+		});
+	}
+	
+	private Mono<String> updateCostInColectionMongo(Mono<DestinationPointOfSalesMongo> destinationMongo) {
+		return destinationMongo.flatMap(destinationPointOfSales::save)
+				.map(result->{
+					return "OK";
+				});
+	}
+	
+	private Destination setDestinationForUpdate(Destination costAndDestination,VertexRedisRequest request) {
 		costAndDestination.setStartVertex(request.getStartVertex());
 		costAndDestination.setEndVertex(request.getEndVertex());
 		return costAndDestination;
@@ -144,4 +205,5 @@ public class CostRedisImplementation implements CostAndRouteRedis {
 	private String saveGraphInRedis(GraphObject graph){
 		return  this.petitionRedis.saveReactiveJsonBucket(RedisEnum.GRAPH.value, graph);
 	}
+	
 }

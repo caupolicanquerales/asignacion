@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.capo.redisVersion2.dto.CostAndDestination;
+import com.capo.redisVersion2.dto.Destination;
 import com.capo.redisVersion2.dto.Destinations;
 import com.capo.redisVersion2.entity.DestinationPointOfSalesMongo;
 import com.capo.redisVersion2.interfaces.CostAndRouteRedis;
@@ -60,17 +60,17 @@ public class PreloadDestinationAndCost implements CommandLineRunner{
 		Destinations destinations= mapper.readValue(json, Destinations.class);
 		return destinations;
 	}
-	private DestinationPointOfSalesMongo getDestinationPointOfSalesMongo(CostAndDestination destination) {
+	private DestinationPointOfSalesMongo getDestinationPointOfSalesMongo(Destination destination) {
 		DestinationPointOfSalesMongo destinationMongo = new DestinationPointOfSalesMongo();
-		destinationMongo.setCostAndDestination(destination);
+		destinationMongo.setDestination(destination);
 		return destinationMongo;
 	}
 	
 	private Mono<String> savingDestinationInRedis(DestinationPointOfSalesMongo response) {
 		VertexRedisRequest vertexRedis= new VertexRedisRequest();
-		vertexRedis.setStartVertex(response.getCostAndDestination().getStartVertex());
-		vertexRedis.setEndVertex(response.getCostAndDestination().getEndVertex());
-		vertexRedis.setCost(response.getCostAndDestination().getCost());
+		vertexRedis.setStartVertex(response.getDestination().getStartVertex());
+		vertexRedis.setEndVertex(response.getDestination().getEndVertex());
+		vertexRedis.setCost(response.getDestination().getCost());
 		costAndRouteRedis.saveAndUpdateCostAndDestinationStartingApp(vertexRedis);
 		return Mono.just("OK");
 	}

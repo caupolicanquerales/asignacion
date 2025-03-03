@@ -23,7 +23,7 @@ public class PointsOfSaleRedisController {
 	
 	@PostMapping("/save")
 	public Mono<ResponseEntity<String>> saveAndUpdatePointsOfsale(@RequestBody PointsRedisRequest request){
-		return pointsOfSale.saveAndUpdateCostPointsOfSale(request)
+		return pointsOfSale.updateCostPointsOfSale(request)
 				.map(ResponseEntity.ok()::body)
 				.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 	}

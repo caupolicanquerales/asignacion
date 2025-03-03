@@ -13,7 +13,9 @@ import org.mockito.Mockito;
 import org.redisson.api.RMapReactive;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.capo.redisVersion2.entity.PointOfSalesInMongo;
 import com.capo.redisVersion2.interfaces.BasicPetitionRedis;
+import com.capo.redisVersion2.repository.PointOfSaleMongoRepository;
 import com.capo.redisVersion2.request.PointsRedisRequest;
 import com.capo.redisVersion2.response.ResponsePointsRedis;
 
@@ -28,36 +30,54 @@ class PointsOfSaleRedisImplTest {
 	@Mock
 	private BasicPetitionRedis petitionRedis;
 	
+	@Mock
+	private PointOfSaleMongoRepository pointOfSaleMongo;
+	
 	private PointsRedisRequest request;
+	private RMapReactive<String,String> map;
 	
 	@BeforeEach
 	public void setup() {
+		map= new MapReactiveMock();
 		request= new PointsRedisRequest ();
 		request.setLocation("Palermo");
 		request.setId("1");
 	}
 	
 	@Test
-	void saveAndUpdateCostPointsOfSale_test() {
-		RMapReactive<String,String> map= new MapReactiveMock();
+	public void saveAndUpdateCostPointsOfSale_test() {
 		when(petitionRedis.getReactiveMap(Mockito.any())).thenReturn(map);
-		Mono<String> result= pointsOfSale.saveAndUpdateCostPointsOfSale(request);
+		Mono<String> result= pointsOfSale.updateCostPointsOfSale(request);
 		assert(Objects.nonNull(result));
 	}
 	
 	@Test
-	void removePointsOfSale_test() {
-		RMapReactive<String,String> map= new MapReactiveMock();
+	public void removePointsOfSale_test() {
 		when(petitionRedis.getReactiveMap(Mockito.any())).thenReturn(map);
 		Mono<String> result= pointsOfSale.removePointsOfSale(request);
 		assert(Objects.nonNull(result));
 	}
 	
 	@Test
-	void getPointsOfSale_test() {
-		RMapReactive<String,String> map= new MapReactiveMock();
+	public void getPointsOfSale_test() {
 		when(petitionRedis.getReactiveMap(Mockito.any())).thenReturn(map);
 		ResponsePointsRedis result= pointsOfSale.getPointsOfSale().block();
 		assert(Objects.nonNull(result));
+	}
+	
+	@Test
+	public void savePointsOfSaleStartingApp_test() {
+		when(petitionRedis.getReactiveMap(Mockito.any())).thenReturn(map);
+		String result= pointsOfSale.savePointsOfSaleStartingApp(request);
+		assert(result.equals("OK"));
+	}
+	
+	@Test
+	public void savePointsOfSale_test() {
+		request.setLocation("NO,NO");
+		when(petitionRedis.getReactiveMap(Mockito.any())).thenReturn(map);
+		when(pointOfSaleMongo.save(Mockito.any())).thenReturn(Mono.just(new PointOfSalesInMongo()));
+		String result= pointsOfSale.savePointsOfSale(request).block();
+		assert(result.equals("OK"));
 	}
 }

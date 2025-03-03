@@ -7,7 +7,7 @@
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/config/SpringSecurityConfig.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/controller/CostPointsOfSaleRedisController.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/controller/PointsOfSaleRedisController.java
-/home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/dto/CostAndDestination.java
+/home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/dto/Destination.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/dto/Destinations.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/dto/GraphObject.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/dto/Node.java
@@ -17,6 +17,7 @@
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/entity/DestinationPointOfSalesMongo.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/entity/PointOfSalesInMongo.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/enums/RedisEnum.java
+/home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/globalException/GlobalExceptionHandler.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/interfaces/BasicPetitionRedis.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/interfaces/BuildingGraphRedis.java
 /home/usuario/Escritorio/programas/asignacion/src/main/java/com/capo/redisVersion2/interfaces/CostAndRouteRedis.java

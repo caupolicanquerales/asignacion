@@ -29,7 +29,7 @@ public class PointsOfSaleRedisImpl implements PointsOfSaleRedis{
 	private PointOfSaleMongoRepository pointOfSaleMongo;
 	
 	@Override
-	public Mono<String> saveAndUpdateCostPointsOfSale(PointsRedisRequest request) {
+	public Mono<String> updateCostPointsOfSale(PointsRedisRequest request) {
 		RMapReactive<String,String> map = this.petitionRedis.getReactiveMap(RedisEnum.MAP_STORES.value);
 		map.put(request.getLocation(),request.getId()).then().subscribe();
 		return Mono.just("OK");

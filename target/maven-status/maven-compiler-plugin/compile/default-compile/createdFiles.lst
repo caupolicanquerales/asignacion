@@ -32,6 +32,7 @@ com/capo/redisVersion2/interfaces/PointsOfSaleRedis.class
 com/capo/redisVersion2/component/PreloadDestinationAndCost.class
 com/capo/redisVersion2/dto/PointOfSales.class
 com/capo/redisVersion2/interfaces/RecoverFileFromResource.class
+com/capo/redisVersion2/globalException/GlobalExceptionHandler.class
 com/capo/redisVersion2/service/RecoverFileFromResourceImpl.class
 com/capo/redisVersion2/request/PointsRedisRequest.class
 com/capo/redisVersion2/dto/Point.class
@@ -39,6 +40,6 @@ com/capo/redisVersion2/dto/Node.class
 com/capo/redisVersion2/config/SpringSecurityConfig.class
 com/capo/redisVersion2/controller/CostPointsOfSaleRedisController.class
 com/capo/redisVersion2/repository/PointOfSaleMongoRepository.class
+com/capo/redisVersion2/dto/Destination.class
 com/capo/redisVersion2/interfaces/UserService.class
 com/capo/redisVersion2/interfaces/CostAndRouteRedis.class
-com/capo/redisVersion2/dto/CostAndDestination.class
