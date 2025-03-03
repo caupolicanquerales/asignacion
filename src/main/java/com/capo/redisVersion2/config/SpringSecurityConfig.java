@@ -37,6 +37,7 @@ public class SpringSecurityConfig {
 				.pathMatchers(HttpMethod.POST,"/costos/update-cost").permitAll()
 				.pathMatchers(HttpMethod.POST,"/costos/save-destination").permitAll()
 				.pathMatchers(HttpMethod.DELETE,"/costos/delete").permitAll()
+				.pathMatchers(HttpMethod.POST,"/accreditation/create").permitAll()
 				.anyExchange().authenticated())
 				.csrf(ServerHttpSecurity.CsrfSpec::disable)
 				.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
